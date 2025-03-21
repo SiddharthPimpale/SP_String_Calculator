@@ -10,6 +10,14 @@ function add(numbers) {
     }
 
     let numberList = numbers.split(delimiter).map((num) => parseInt(num));
+
+    const negativeNumbers = numberList.filter((num) => num < 0);
+
+    if (negativeNumbers.length > 0)
+        throw new Error(
+            `negative numbers are not allowed: ${negativeNumbers.join(",")}`
+        );
+
     let total = 0;
 
     numberList.forEach((num) => {
