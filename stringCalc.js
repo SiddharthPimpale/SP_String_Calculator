@@ -1,3 +1,7 @@
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function add(numbers) {
     if (!numbers) return 0;
 
@@ -5,7 +9,17 @@ function add(numbers) {
 
     if (numbers.startsWith("//")) {
         const sections = numbers.split("\n");
-        delimiter = new RegExp(sections[0].substring(2));
+        let delimiterString = sections[0].substring(2);
+        if (delimiterString.includes("[")) {
+            delimiter = new RegExp(
+                delimiterString
+                    .match(/\[(.*?)\]/g)
+                    .map((delim) => escapeRegExp(delim.slice(1, -1)))
+                    .join("|")
+            );
+        } else {
+            delimiter = new RegExp(escapeRegExp(delimiterString));
+        }
         numbers = sections[1];
     }
 
