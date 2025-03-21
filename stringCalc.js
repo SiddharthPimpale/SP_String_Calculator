@@ -9,7 +9,10 @@ function add(numbers) {
         numbers = sections[1];
     }
 
-    let numberList = numbers.split(delimiter).map((num) => parseInt(num));
+    let numberList = numbers
+        .split(delimiter)
+        .map((num) => parseInt(num))
+        .filter((num) => num <= 1000);
 
     const negativeNumbers = numberList.filter((num) => num < 0);
 
